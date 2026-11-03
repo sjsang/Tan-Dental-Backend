@@ -4,6 +4,12 @@ const NguoiLienHe = require("../models/NguoiLienHe");
 const NhaKhoa = require("../models/NhaKhoa");
 const PhieuBaoHanh = require("../models/PhieuBaoHanh");
 const SanPham = require("../models/SanPham");
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const VN_TZ = "Asia/Ho_Chi_Minh"; // UTC+7
 
 const buildOrderCodePrefix = (date = new Date()) => {
     const yy = String(date.getFullYear()).slice(-2);
@@ -256,12 +262,10 @@ const formatViTri = (viTriArr) => {
         .join("; ");
 };
 
-// Định dạng ngày giờ tiếng Việt
+// Định dạng ngày giờ tiếng Việt (theo giờ VN, không phụ thuộc múi giờ của server)
 const formatDT = (d) => {
     if (!d) return " ";
-    const dt = new Date(d);
-    const pad = (n) => String(n).padStart(2, "0");
-    return `${pad(dt.getDate())}/${pad(dt.getMonth() + 1)}/${dt.getFullYear()} ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+    return dayjs(d).tz(VN_TZ).format("DD/MM/YYYY HH:mm");
 };
 
 // Helper: so sánh old và updateData, trả về chuỗi mô tả chi tiết các thay đổi
