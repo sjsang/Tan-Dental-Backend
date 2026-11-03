@@ -327,6 +327,7 @@ const buildChinhSuaLog = async (old, updates) => {
         ["ghiChuChung", "Ghi chú chung"],
         ["ghiChuTaiChinh", "Ghi chú tài chính"],
         ["ghiChuSanXuat", "Ghi chú sản xuất"],
+        ["lyDoHenLai", "Lý do hẹn lại"],
     ];
     for (const [field, label] of ghiChuFields) {
         if (!(field in updates)) continue;
@@ -450,7 +451,7 @@ exports.updateDonHang = async (req, res) => {
 
         // Lấy đơn hàng hiện tại để kiểm tra trạng thái khoá và so sánh thay đổi
         const donHangHienTai = await DonHang.findById(req.params.id)
-            .select("trangThai daXuatHoaDon ngayNhan yeuCauHoanThanh henGiao bacSi chiDinhBacSi ghiChuChung ghiChuTaiChinh ghiChuSanXuat danhSachSanPham danhSachPhuKien")
+            .select("trangThai daXuatHoaDon ngayNhan yeuCauHoanThanh henGiao lyDoHenLai bacSi chiDinhBacSi ghiChuChung ghiChuTaiChinh ghiChuSanXuat danhSachSanPham danhSachPhuKien")
             .lean();
         if (!donHangHienTai) {
             return res.status(404).json({ success: false, message: "Không tìm thấy đơn hàng" });

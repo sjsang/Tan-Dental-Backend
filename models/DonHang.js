@@ -114,6 +114,8 @@ const donHangSchema = new mongoose.Schema(
         ngayNhan: { type: Date, required: true },
         yeuCauHoanThanh: { type: Date, required: true },
         henGiao: { type: Date, required: true },
+        // Lý do khi dời Hẹn giao sang ngày sau (dùng để tách nhóm "Đơn hẹn lại" trong kế hoạch giao hàng)
+        lyDoHenLai: { type: String, default: "" },
 
         // Nhóm ghi chú chung
         chiDinhBacSi: String,
